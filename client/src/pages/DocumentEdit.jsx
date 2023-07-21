@@ -20,8 +20,10 @@ function DocumentEdit() {
     socket.emit("join", roomId);
 
     socket.on("editcomes", (data) => {
-      console.log("💃💃", data.text);
-      setText(data.text);
+      console.log("💃💃", data);
+      if (data.roomId === roomId) {
+        setText(data.text);
+      }
     });
   }, []);
 

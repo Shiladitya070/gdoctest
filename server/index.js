@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
     }
     const roomIndex = rooms.findIndex((room) => room.roomId === data);
 
-    socket.emit("editcomes", { text: rooms[roomIndex].doc });
+    socket.emit("editcomes", { roomId: data, text: rooms[roomIndex].doc });
 
     console.log("🛖🛖", rooms);
     console.log(`${socket.id} joined at ${data}`);
@@ -36,8 +36,8 @@ io.on("connection", (socket) => {
     rooms[roomIndex].doc = text;
 
     console.log("🏠", rooms);
-    socket.broadcast.emit("editcomes", data);
-    socket.emit("editcomes", data);
+    socket.broadcast.emit("editcomes", { roomId, text: rooms[roomIndex].doc });
+    socket.emit("editcomes", { roomId, text: rooms[roomIndex].doc });
   });
 });
 
