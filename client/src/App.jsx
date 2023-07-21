@@ -1,36 +1,18 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:3000");
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import DocumentEdit from "./pages/DocumentEdit";
 
 function App() {
-  const [text, setText] = useState("");
-  const handleEdititng = (e) => {
-    const newText = e.target.value;
-
-    socket.emit("edit", { text: newText });
-  };
-
-  useEffect(() => {
-    socket.on("editcomes", (data) => {
-      console.log("💃💃", data.text);
-      setText(data.text);
-    });
-  }, []);
-
   return (
-    <>
-      <h1>Colaborate edit</h1>
-      <textarea
-        name="text"
-        id=""
-        onChange={handleEdititng}
-        cols="30"
-        rows="10"
-        value={text}
-      />
-    </>
+    <Router>
+      {/* <Toaster /> */}
+      <Routes>
+        <Route path="/doc/:roomId" element={<DocumentEdit />} />
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }
 
